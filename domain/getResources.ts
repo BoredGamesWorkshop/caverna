@@ -1,11 +1,8 @@
-type Resources = {
-  stone: number;
-  wood: number;
-};
+class Resources {
+  stone: number = 0;
+  wood: number = 0;
+}
 
 export function getResources(): Resources {
-  return {
-    stone: 0,
-    wood: 0,
-  };
+  return new Resources();
 }
