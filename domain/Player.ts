@@ -17,19 +17,6 @@ export class Player {
     }
 }
 
-export function buildInitialPlayer(): Player {
-    const DWARFS_NUMBER = 2;
-    const player = new Player();
-    for (let i = 0; i < DWARFS_NUMBER; i++) {
-        addDwarf();
-    }
-    return player;
-
-    function addDwarf() {
-        const dwarf = new Dwarf();
-        player.dwarfs.set(dwarf.id, dwarf);
-    }
-}
 export type PlayerId = string;
 
 export class Dwarf {

@@ -1,6 +1,5 @@
-import { GatherWood } from "./gatherWood";
-import { buildInitialPlayer, Player, PlayerId } from "./Player";
-import { ActionSpace, ActionSpaceId } from "./ActionSpace";
+import { Player, PlayerId } from "./Player";
+import type { ActionSpace, ActionSpaceId } from "./ActionSpace";
 
 export class Game {
     constructor(actionBoard: ActionBoard, players: Player[]) {
@@ -19,10 +18,6 @@ export class Game {
     }
 }
 
-export function buildInitialGame(): Game {
-    return new Game(buildInitialActionBoard(), [buildInitialPlayer()]);
-}
-
 export class ActionBoard {
     constructor(actionSpaces: ActionSpace[]) {
         this.actionSpaces = new Map(
@@ -38,8 +33,4 @@ export class ActionBoard {
         }
         return actionSpace;
     }
-}
-
-export function buildInitialActionBoard() {
-    return new ActionBoard([GatherWood.createActionSpace()]);
 }
