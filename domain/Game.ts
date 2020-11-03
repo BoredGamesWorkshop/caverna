@@ -15,6 +15,10 @@ export class Game {
 
 export class ActionBoard {}
 
+export class ActionSpace {
+    dwarf?: Dwarf;
+}
+
 export class Player {
     id: PlayerId = uuidv4();
     dwarfs: Map<DwarfId, Dwarf> = new Map();

@@ -1,23 +1,41 @@
 import { expect } from "chai";
 import { gatherWood } from "./gatherWood";
-import { Dwarf, Game, Player } from "./Game";
-import { Mutation } from "./Mutation";
+import { ActionSpace, Dwarf, Game, Player } from "./Game";
+import { EntityType, isMutationOfType, Mutation } from "./Mutation";
 
 describe("Gather wood", () => {
     describe("should place a dwarf", () => {
+        function expectMutationsOfType<T extends EntityType>(
+            mutations: Mutation<EntityType>[],
+            classType: { new (): T }
+        ) {
+            const mutationsT = mutations.filter(isMutationOfType(classType));
+            return {
+                toVerifyOnce: (check: (mutation: Mutation<T>) => boolean) => {
+                    expect(mutationsT.filter((mutation) => check(mutation))).to.have.lengthOf(1);
+                },
+            };
+        }
+
         it("should use a dwarf", () => {
             const { game, player } = buildBaseObjects({ nbDwarfs: 3 });
 
             const mutations = gatherWood(game, player.id);
 
-            const useDwarfMutations = mutations
-                .filter((mutation) => mutation.original instanceof Dwarf)
-                .filter((mutation) => (mutation as Mutation<Dwarf>).diff.isAvailable === false);
-
-            expect(useDwarfMutations).to.have.lengthOf(1);
+            expectMutationsOfType(mutations, Dwarf).toVerifyOnce(
+                (mutation) => mutation.diff.isAvailable === false
+            );
         });
 
-        it("should use an action space", () => {});
+        it("should use an action space", () => {
+            const { game, player } = buildBaseObjects({ nbDwarfs: 3 });
+
+            const mutations = gatherWood(game, player.id);
+
+            expectMutationsOfType(mutations, ActionSpace).toVerifyOnce(
+                (mutation) => !!mutation.diff.dwarf
+            );
+        });
     });
 
     it("should gather wood", () => {});
