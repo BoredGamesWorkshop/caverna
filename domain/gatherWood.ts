@@ -1,15 +1,26 @@
-import { Dwarf, Game, PlayerId } from "./Game";
+import { ActionSpace, ActionSpaceId, Game, PlayerId } from "./Game";
 import { EntityType, Mutation } from "./Mutation";
 
-export function gatherWood(game: Game, playerId: PlayerId): Mutation<EntityType>[] {
-    const useDwarfMutation = useDwarf(game, playerId);
-    return [useDwarfMutation];
-}
+export namespace GatherWood {
+    export function execute(game: Game, playerId: PlayerId): Mutation<EntityType>[] {
+        const bookActionSpaceMutations = bookActionSpace(ActionSpaceId.GATHER_WOOD, game, playerId);
+        return [...bookActionSpaceMutations];
+    }
 
-function useDwarf(game: Game, playerId: PlayerId): Mutation<Dwarf> {
-    const player = game.getPlayer(playerId);
-    return {
-        original: player.getFirstAvailableDwarf(),
-        diff: { isAvailable: false },
-    };
+    function bookActionSpace(
+        actionSpaceId: ActionSpaceId,
+        game: Game,
+        playerId: PlayerId
+    ): Mutation<EntityType>[] {
+        const player = game.getPlayer(playerId);
+        const dwarf = player.getFirstAvailableDwarf();
+        return [
+            { original: dwarf, diff: { isAvailable: false } },
+            { original: game.actionBoard.getActionSpace(actionSpaceId), diff: { dwarf } },
+        ];
+    }
+
+    export function createActionSpace() {
+        return new ActionSpace(ActionSpaceId.GATHER_WOOD, execute);
+    }
 }

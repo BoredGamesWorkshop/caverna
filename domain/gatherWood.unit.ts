@@ -1,13 +1,13 @@
 import { expect } from "chai";
-import { gatherWood } from "./gatherWood";
-import { ActionSpace, Dwarf, Game, Player } from "./Game";
+import { GatherWood } from "./gatherWood";
+import { ActionSpace, buildInitialActionBoard, Dwarf, Game, Player } from "./Game";
 import { EntityType, isMutationOfType, Mutation } from "./Mutation";
 
 describe("Gather wood", () => {
     describe("should place a dwarf", () => {
         function expectMutationsOfType<T extends EntityType>(
             mutations: Mutation<EntityType>[],
-            classType: { new (): T }
+            classType: { new (...arg: any): T }
         ) {
             const mutationsT = mutations.filter(isMutationOfType(classType));
             return {
@@ -20,7 +20,7 @@ describe("Gather wood", () => {
         it("should use a dwarf", () => {
             const { game, player } = buildBaseObjects({ nbDwarfs: 3 });
 
-            const mutations = gatherWood(game, player.id);
+            const mutations = GatherWood.execute(game, player.id);
 
             expectMutationsOfType(mutations, Dwarf).toVerifyOnce(
                 (mutation) => mutation.diff.isAvailable === false
@@ -30,7 +30,7 @@ describe("Gather wood", () => {
         it("should use an action space", () => {
             const { game, player } = buildBaseObjects({ nbDwarfs: 3 });
 
-            const mutations = gatherWood(game, player.id);
+            const mutations = GatherWood.execute(game, player.id);
 
             expectMutationsOfType(mutations, ActionSpace).toVerifyOnce(
                 (mutation) => !!mutation.diff.dwarf
@@ -45,9 +45,8 @@ describe("Gather wood", () => {
     it("should throw if the action space is not available", () => {});
 
     function buildBaseObjects({ nbDwarfs }: { nbDwarfs: number }) {
-        const game = new Game();
         const player = buildPlayer(nbDwarfs);
-        game.players.set(player.id, player);
+        const game = new Game(buildInitialActionBoard(), [player]);
         return { game, player };
     }
 
