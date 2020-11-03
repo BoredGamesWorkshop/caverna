@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from "uuid";
 import { GatherWood } from "./gatherWood";
 import { EntityType, Mutation } from "./Mutation";
+import { buildInitialPlayer, Dwarf, Player, PlayerId } from './Player'
 
 export class Game {
     constructor(actionBoard: ActionBoard, players: Player[]) {
@@ -60,40 +60,3 @@ export enum ActionSpaceId {
 }
 
 export type Action = (game: Game, playerId: PlayerId) => Mutation<EntityType>[];
-
-export class Player {
-    id: PlayerId = uuidv4();
-    dwarfs: Map<DwarfId, Dwarf> = new Map();
-
-    getFirstAvailableDwarf() {
-        const availableDwarfs = Array.from(this.dwarfs.values()).filter(
-            (dwarf) => dwarf.isAvailable
-        );
-        if (availableDwarfs.length === 0) {
-            throw new Error("No dwarf available");
-        }
-        return availableDwarfs[0];
-    }
-}
-
-export function buildInitialPlayer(): Player {
-    const DWARFS_NUMBER = 2;
-    const player = new Player();
-    for (let i = 0; i < DWARFS_NUMBER; i++) {
-        addDwarf();
-    }
-    return player;
-
-    function addDwarf() {
-        const dwarf = new Dwarf();
-        player.dwarfs.set(dwarf.id, dwarf);
-    }
-}
-export type PlayerId = string;
-
-export class Dwarf {
-    id: DwarfId = uuidv4();
-    isAvailable: boolean = true;
-}
-
-export type DwarfId = string;

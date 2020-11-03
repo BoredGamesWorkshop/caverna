@@ -1,4 +1,4 @@
-class Resources {
+export class Resources {
     stone: number = 0;
     wood: number = 0;
 }

@@ -1,4 +1,5 @@
-import { ActionSpace, Dwarf, Player } from "./Game";
+import { ActionSpace } from "./Game";
+import { Dwarf, Player } from "./Player";
 
 export type Mutation<T extends EntityType> = {
     original: T;
