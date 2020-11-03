@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-import { Resources } from "./getResources";
+import { Resources } from "./Resources";
 
 export class Player {
     id: PlayerId = uuidv4();
-    resources: Resources = new Resources();
+    resources: Resources = new Map();
     dwarfs: Map<DwarfId, Dwarf> = new Map();
 
     getFirstAvailableDwarf() {
