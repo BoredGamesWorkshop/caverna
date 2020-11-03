@@ -1,8 +1,9 @@
 import { expect } from "chai";
 import { GatherWood } from "./gatherWood";
-import { ActionSpace, buildInitialGame } from "./Game";
+import { buildInitialGame } from "./Game";
 import { EntityType, isMutationOfType, Mutation } from "./Mutation";
 import { Dwarf, Player } from "./Player";
+import { ActionSpace } from "./ActionSpace";
 
 describe("Gather wood", () => {
     describe("should place a dwarf", () => {

@@ -1,6 +1,6 @@
 import { GatherWood } from "./gatherWood";
-import { EntityType, Mutation } from "./Mutation";
-import { buildInitialPlayer, Dwarf, Player, PlayerId } from './Player'
+import { buildInitialPlayer, Player, PlayerId } from "./Player";
+import { ActionSpace, ActionSpaceId } from "./ActionSpace";
 
 export class Game {
     constructor(actionBoard: ActionBoard, players: Player[]) {
@@ -43,20 +43,3 @@ export class ActionBoard {
 export function buildInitialActionBoard() {
     return new ActionBoard([GatherWood.createActionSpace()]);
 }
-
-export class ActionSpace {
-    constructor(id: ActionSpaceId, action: Action, dwarf?: Dwarf) {
-        this.id = id;
-        this.action = action;
-        this.dwarf = dwarf;
-    }
-    id: ActionSpaceId;
-    action: Action;
-    dwarf?: Dwarf;
-}
-
-export enum ActionSpaceId {
-    GATHER_WOOD = "gather_wood",
-}
-
-export type Action = (game: Game, playerId: PlayerId) => Mutation<EntityType>[];

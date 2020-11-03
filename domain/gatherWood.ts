@@ -1,6 +1,7 @@
-import { ActionSpace, ActionSpaceId, Game } from "./Game";
+import { Game } from "./Game";
 import { EntityType, Mutation } from "./Mutation";
 import { PlayerId } from "./Player";
+import { ActionSpace, ActionSpaceId } from "./ActionSpace";
 
 export namespace GatherWood {
     export function execute(game: Game, playerId: PlayerId): Mutation<EntityType>[] {
