@@ -19,6 +19,10 @@ export class Game {
     }
 }
 
+export function buildInitialGame(): Game {
+    return new Game(buildInitialActionBoard(), [buildInitialPlayer()]);
+}
+
 export class ActionBoard {
     constructor(actionSpaces: ActionSpace[]) {
         this.actionSpaces = new Map(
@@ -69,6 +73,20 @@ export class Player {
             throw new Error("No dwarf available");
         }
         return availableDwarfs[0];
+    }
+}
+
+export function buildInitialPlayer(): Player {
+    const DWARFS_NUMBER = 2;
+    const player = new Player();
+    for (let i = 0; i < DWARFS_NUMBER; i++) {
+        addDwarf();
+    }
+    return player;
+
+    function addDwarf() {
+        const dwarf = new Dwarf();
+        player.dwarfs.set(dwarf.id, dwarf);
     }
 }
 export type PlayerId = string;
