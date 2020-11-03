@@ -3,7 +3,7 @@ import { Resources } from "./Resources";
 
 export class Player {
     id: PlayerId = uuidv4();
-    resources: Resources = new Map();
+    resources: Resources = new Resources();
     dwarfs: Map<DwarfId, Dwarf> = new Map();
 
     getFirstAvailableDwarf() {
