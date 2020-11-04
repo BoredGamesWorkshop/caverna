@@ -9,7 +9,10 @@ export namespace UrgentWishForChildren {
         const actionSpaceId = ActionSpaceId.URGENT_WISH_FOR_CHILDREN;
         const player = game.getPlayer(playerId);
         const actionSpace = game.actionBoard.getActionSpace(actionSpaceId);
-        return [...ActionUtils.bookActionSpace(actionSpace, player)];
+        return [
+            ...ActionUtils.bookActionSpace(actionSpace, player),
+            ...ActionUtils.giveBirthToDwarf(actionSpace, player),
+        ];
     }
 
     export function createActionSpace() {
