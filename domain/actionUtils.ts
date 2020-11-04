@@ -30,6 +30,7 @@ export namespace ActionUtils {
         player: Player
     ): EntityMutation<EntityType>[] {
         const newDwarf = new Dwarf();
+        newDwarf.isAvailable = false;
         const newPlayerDwarfs = new Map(player.dwarfs);
         newPlayerDwarfs.set(newDwarf.id, newDwarf);
         return [
