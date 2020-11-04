@@ -1,8 +1,9 @@
 import { Game } from "./entity/Game";
 import { EntityType, Mutation } from "./entity/Mutation";
-import { Player, PlayerId } from "./entity/Player";
+import { PlayerId } from "./entity/Player";
 import { ActionSpace, ActionSpaceId } from "./entity/ActionSpace";
 import { Resources, ResourceType } from "./entity/Resources";
+import { ActionUtils } from "./actionUtils";
 
 export namespace GatherWood {
     const REPLENISH_RESOURCES = {
@@ -14,21 +15,9 @@ export namespace GatherWood {
         const actionSpaceId = ActionSpaceId.GATHER_WOOD;
         const player = game.getPlayer(playerId);
         const actionSpace = game.actionBoard.getActionSpace(actionSpaceId);
-        return [...bookActionSpace(actionSpace, player), ...takeResources(actionSpace, player)];
-    }
-
-    function bookActionSpace(actionSpace: ActionSpace, player: Player): Mutation<EntityType>[] {
-        const dwarf = player.getFirstAvailableDwarf();
         return [
-            { original: dwarf, diff: { isAvailable: false } },
-            { original: actionSpace, diff: { dwarf } },
-        ];
-    }
-
-    function takeResources(actionSpace: ActionSpace, player: Player): Mutation<EntityType>[] {
-        return [
-            { original: actionSpace, diff: { resources: new Resources() } },
-            { original: player, diff: { resources: player.resources.add(actionSpace.resources) } },
+            ...ActionUtils.bookActionSpace(actionSpace, player),
+            ...ActionUtils.takeResources(actionSpace, player),
         ];
     }
 
