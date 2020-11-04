@@ -1,8 +1,8 @@
-import { Game } from "./Game";
-import { EntityType, Mutation } from "./Mutation";
-import { Player, PlayerId } from "./Player";
-import { ActionSpace, ActionSpaceId } from "./ActionSpace";
-import { Resources, ResourceType } from "./Resources";
+import { Game } from "./entity/Game";
+import { EntityType, Mutation } from "./entity/Mutation";
+import { Player, PlayerId } from "./entity/Player";
+import { ActionSpace, ActionSpaceId } from "./entity/ActionSpace";
+import { Resources, ResourceType } from "./entity/Resources";
 
 export namespace GatherWood {
     const REPLENISH_RESOURCES = {
