@@ -1,5 +1,5 @@
 import { Dwarf, PlayerId } from "./Player";
-import { EntityType, Mutation } from "./Mutation";
+import { EntityMutation } from "./Mutation";
 import { Game } from "./Game";
 import { Resources } from "./Resources";
 
@@ -23,7 +23,7 @@ export enum ActionSpaceId {
     GATHER_WOOD = "gather_wood",
 }
 
-export type Action = (game: Game, playerId: PlayerId) => Mutation<EntityType>[];
+export type Action = (game: Game, playerId: PlayerId) => EntityMutation[];
 
 export type Replenishment = {
     ifEmpty: Resources;
