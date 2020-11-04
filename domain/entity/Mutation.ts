@@ -17,7 +17,7 @@ type DiscriminateUnion<T> = T extends any ? Mutation<T> : never;
 // To fix that, we create a new type with an intersection to exclude Mutation<EntityType>
 export type EntityMutation<T> = DiscriminateUnion<EntityType> & Mutation<T>;
 
-export function isMutationOfType<T extends EntityType>(classType: { new (): T }) {
+export function isMutationOfType<T extends EntityType>(classType: { new (...arg: any): T }) {
     return function (mutation: EntityMutation<EntityType>): mutation is EntityMutation<T> {
         return mutation.original instanceof classType;
     };
