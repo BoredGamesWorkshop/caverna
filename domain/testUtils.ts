@@ -1,8 +1,8 @@
-import { EntityType, isMutationOfType, Mutation } from "./Mutation";
+import { EntityType, isMutationOfType, Mutation } from "./entity/Mutation";
 import { expect } from "chai";
 import { buildInitialGame } from "./initializeGame";
-import { Action, ActionSpace } from "./ActionSpace";
-import { Dwarf } from "./Player";
+import { Action, ActionSpace } from "./entity/ActionSpace";
+import { Dwarf } from "./entity/Player";
 
 export function shouldPlaceDwarf(action: Action) {
     describe("should place a dwarf", () => {

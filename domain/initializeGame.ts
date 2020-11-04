@@ -1,6 +1,6 @@
 import { GatherWood } from "./gatherWood";
-import { ActionBoard, Game } from "./Game";
-import { Dwarf, Player } from "./Player";
+import { ActionBoard, Game } from "./entity/Game";
+import { Dwarf, Player } from "./entity/Player";
 
 export function buildInitialGame(): Game {
     return new Game(buildInitialActionBoard(), [buildInitialPlayer()]);
