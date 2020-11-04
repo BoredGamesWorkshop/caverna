@@ -32,6 +32,9 @@ export namespace ActionUtils {
         const newDwarf = new Dwarf();
         const newPlayerDwarfs = new Map(player.dwarfs);
         newPlayerDwarfs.set(newDwarf.id, newDwarf);
-        return [{ original: player, diff: { dwarfs: newPlayerDwarfs } }];
+        return [
+            { original: player, diff: { dwarfs: newPlayerDwarfs } },
+            { original: actionSpace, diff: { newBornDwarf: newDwarf } },
+        ];
     }
 }

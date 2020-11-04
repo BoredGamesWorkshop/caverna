@@ -1,6 +1,7 @@
 import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "./testUtils";
 import { UrgentWishForChildren } from "./urgentWishForChildren";
 import { Player } from "./entity/Player";
+import { ActionSpace } from "./entity/ActionSpace";
 
 describe("Urgent Wish for Children", () => {
     shouldPlaceDwarf(UrgentWishForChildren.execute);
@@ -16,7 +17,15 @@ describe("Urgent Wish for Children", () => {
         );
     });
 
-    it("should add new dwarf to action space", function () {});
+    it("should add new dwarf to action space", function () {
+        const { game, player } = buildBaseObjects();
+
+        const mutations = UrgentWishForChildren.execute(game, player.id);
+
+        expectMutationsOfType(mutations, ActionSpace).toVerifyOnce(
+            (mutation) => !!mutation.diff.newBornDwarf
+        );
+    });
 
     it("new dwarf should be busy", function () {});
 
