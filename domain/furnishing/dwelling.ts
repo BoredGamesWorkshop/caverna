@@ -1,5 +1,4 @@
-import { Resources, ResourceType } from "../entity/Resources";
-import { Furnishing, FurnishingId } from "../entity/Furnishing";
+import { Furnishing, FurnishingId, Resources, ResourceType } from "../entity";
 
 export namespace Dwelling {
     const PRICE = new Resources([

@@ -1,9 +1,14 @@
 import { expect } from "chai";
 import { GatherWood } from "./gatherWood";
-import { Dwarf, Player } from "../entity/Player";
-import { ActionSpace, ActionSpaceId } from "../entity/ActionSpace";
-import { Resources, ResourceType } from "../entity/Resources";
-import { Game } from "../entity/Game";
+import {
+    ActionSpace,
+    ActionSpaceId,
+    Dwarf,
+    Game,
+    Player,
+    Resources,
+    ResourceType,
+} from "../entity";
 import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util/tests";
 
 describe("Gather wood", () => {

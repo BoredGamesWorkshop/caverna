@@ -1,9 +1,15 @@
-import { EntityMutation, EntityType, isMutationOfType } from "../entity/Mutation";
+import {
+    Action,
+    ActionSpace,
+    Dwarf,
+    EntityMutation,
+    EntityType,
+    Game,
+    isMutationOfType,
+    Player,
+} from "../entity";
 import { expect } from "chai";
 import { buildInitialGame } from "../initializeGame";
-import { Action, ActionSpace } from "../entity/ActionSpace";
-import { Dwarf, Player } from "../entity/Player";
-import { Game } from "../entity/Game";
 import { Constructor } from "./Constructor";
 
 export function shouldPlaceDwarf(action: Action): void {

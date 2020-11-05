@@ -1,7 +1,5 @@
-import { GatherWood } from "./actionSpace/gatherWood";
-import { ActionBoard, Game } from "./entity/Game";
-import { Dwarf, Player } from "./entity/Player";
-import { UrgentWishForChildren } from "./actionSpace/urgentWishForChildren";
+import { ActionBoard, Dwarf, Game, Player } from "./entity";
+import { GatherWood, UrgentWishForChildren } from "./actionSpace";
 
 export function buildInitialGame(): Game {
     return new Game(buildInitialActionBoard(), [buildInitialPlayer()]);

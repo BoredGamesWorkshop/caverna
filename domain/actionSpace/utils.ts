@@ -1,7 +1,4 @@
-import { ActionSpace } from "../entity/ActionSpace";
-import { Player } from "../entity/Player";
-import { EntityMutation, EntityType } from "../entity/Mutation";
-import { Resources } from "../entity/Resources";
+import { ActionSpace, EntityMutation, EntityType, Player, Resources } from "../entity";
 
 export function bookActionSpace(
     actionSpace: ActionSpace,

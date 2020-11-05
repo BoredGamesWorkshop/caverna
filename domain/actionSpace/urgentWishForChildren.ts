@@ -1,8 +1,5 @@
-import { PlayerId } from "../entity/Player";
-import { EntityMutation, EntityType } from "../entity/Mutation";
-import { Game } from "../entity/Game";
-import { ActionSpace, ActionSpaceId } from "../entity/ActionSpace";
-import { bookActionSpace, giveBirthToDwarf } from "./actionUtils";
+import { ActionSpace, ActionSpaceId, EntityMutation, EntityType, Game, PlayerId } from "../entity";
+import { bookActionSpace, giveBirthToDwarf } from "./utils";
 
 export namespace UrgentWishForChildren {
     export function execute(game: Game, playerId: PlayerId): EntityMutation<EntityType>[] {
