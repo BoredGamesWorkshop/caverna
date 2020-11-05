@@ -4,6 +4,7 @@ import { buildInitialGame } from "./initializeGame";
 import { Action, ActionSpace } from "./entity/ActionSpace";
 import { Dwarf, Player } from "./entity/Player";
 import { Game } from "./entity/Game";
+import { Constructor } from "./util/Constructor";
 
 export function shouldPlaceDwarf(action: Action): void {
     describe("should place a dwarf", () => {
@@ -41,7 +42,7 @@ type ToVerifyOnce<T> = (check: (mutation: EntityMutation<T>) => boolean) => void
 
 export function expectMutationsOfType<T extends EntityType>(
     mutations: EntityMutation<EntityType>[],
-    classType: { new (...arg: any): T }
+    classType: Constructor<T>
 ): { toVerifyOnce: ToVerifyOnce<T> } {
     const mutationsT = mutations.filter(isMutationOfType(classType));
     return {
