@@ -95,26 +95,27 @@ describe("Urgent Wish for Children", () => {
             );
         }
     });
+    describe("should buy dwelling", function () {
+        it("should pay for dwelling", function () {
+            const { game, player } = buildBaseObjects();
+            player.resources = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
 
-    it("should pay for dwelling", function () {
-        const { game, player } = buildBaseObjects();
-        player.resources = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
+            const mutations = UrgentWishForChildren.execute(game, player.id);
 
-        const mutations = UrgentWishForChildren.execute(game, player.id);
+            expectMutationsOfType(mutations, Player).toVerifyOnce(
+                (mutation) => mutation.diff.resources?.isEmpty() === true
+            );
+        });
 
-        expectMutationsOfType(mutations, Player).toVerifyOnce(
-            (mutation) => mutation.diff.resources?.isEmpty() === true
-        );
-    });
+        it("should add dwelling to player's store", function () {
+            const { game, player } = buildBaseObjects();
+            const dwelling = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING);
 
-    it("should add dwelling to player's store", function () {
-        const { game, player } = buildBaseObjects();
-        const dwelling = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING);
+            const mutations = UrgentWishForChildren.execute(game, player.id);
 
-        const mutations = UrgentWishForChildren.execute(game, player.id);
-
-        expectMutationsOfType(mutations, Player).toVerifyOnce(
-            (mutation) => mutation.diff.tilesToPlace?.includes(dwelling) === true
-        );
+            expectMutationsOfType(mutations, Player).toVerifyOnce(
+                (mutation) => mutation.diff.tilesToPlace?.includes(dwelling) === true
+            );
+        });
     });
 });
