@@ -1,8 +1,15 @@
 import { expect } from "chai";
 import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util";
 import { UrgentWishForChildren } from "./urgentWishForChildren";
-import { ActionSpace, Dwarf, EntityMutation, isMutationOfType, Mutation, Player } from "../entity";
-import { Dwelling } from "../furnishing";
+import {
+    ActionSpace,
+    Dwarf,
+    EntityMutation,
+    FurnishingId,
+    isMutationOfType,
+    Mutation,
+    Player,
+} from "../entity";
 
 describe("Urgent Wish for Children", () => {
     shouldPlaceDwarf(UrgentWishForChildren.execute);
@@ -91,8 +98,7 @@ describe("Urgent Wish for Children", () => {
 
     it("should pay for dwelling", function () {
         const { game, player } = buildBaseObjects();
-        const dwelling = Dwelling.createFurnishing();
-        player.resources = dwelling.price;
+        player.resources = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
 
         const mutations = UrgentWishForChildren.execute(game, player.id);
 

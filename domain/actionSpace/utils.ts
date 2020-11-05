@@ -1,4 +1,4 @@
-import { ActionSpace, Dwarf, EntityMutation, Player, Resources } from "../entity";
+import { ActionSpace, Dwarf, EntityMutation, Furnishing, Player, Resources } from "../entity";
 
 export function bookActionSpace(actionSpace: ActionSpace, player: Player): EntityMutation[] {
     const dwarf = player.getFirstAvailableDwarf();
@@ -23,5 +23,16 @@ export function giveBirthToDwarf(actionSpace: ActionSpace, player: Player): Enti
     return [
         { original: player, diff: { dwarfs: newPlayerDwarfs } },
         { original: actionSpace, diff: { newBornDwarf: newDwarf } },
+    ];
+}
+
+export function buyFurnishing(furnishing: Furnishing, player: Player): EntityMutation[] {
+    return [
+        {
+            original: player,
+            diff: {
+                resources: player.resources.remove(furnishing.price),
+            },
+        },
     ];
 }
