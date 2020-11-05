@@ -1,7 +1,8 @@
+import { expect } from "chai";
 import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util";
 import { UrgentWishForChildren } from "./urgentWishForChildren";
 import { ActionSpace, Dwarf, EntityMutation, isMutationOfType, Mutation, Player } from "../entity";
-import { expect } from "chai";
+import { Dwelling } from "../furnishing";
 
 describe("Urgent Wish for Children", () => {
     shouldPlaceDwarf(UrgentWishForChildren.execute);
@@ -88,7 +89,17 @@ describe("Urgent Wish for Children", () => {
         }
     });
 
-    it("should pay for dwelling", function () {});
+    it("should pay for dwelling", function () {
+        const { game, player } = buildBaseObjects();
+        const dwelling = Dwelling.createFurnishing();
+        player.resources = dwelling.price;
+
+        const mutations = UrgentWishForChildren.execute(game, player.id);
+
+        expectMutationsOfType(mutations, Player).toVerifyOnce(
+            (mutation) => mutation.diff.resources?.isEmpty() === true
+        );
+    });
 
     it("should add dwelling to player's store", function () {});
 });
