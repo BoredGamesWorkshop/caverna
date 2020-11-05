@@ -3,7 +3,7 @@ import { EntityMutation, EntityType } from "../entity/Mutation";
 import { PlayerId } from "../entity/Player";
 import { ActionSpace, ActionSpaceId } from "../entity/ActionSpace";
 import { Resources, ResourceType } from "../entity/Resources";
-import { bookActionSpace, takeResources } from "./actionUtils";
+import { bookActionSpace, takeResources } from "./utils";
 
 export const GatherWood = {
     execute,
