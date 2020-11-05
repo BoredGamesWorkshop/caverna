@@ -1,5 +1,5 @@
 import { Dwarf, PlayerId } from "./Player";
-import { EntityMutation, EntityType } from "./Mutation";
+import { EntityMutation, Mutation } from "./Mutation";
 import { Game } from "./Game";
 import { Resources } from "./Resources";
 
@@ -32,14 +32,14 @@ export enum ActionSpaceId {
     URGENT_WISH_FOR_CHILDREN = "urgent_wish_for_children",
 }
 
-export type Action = (game: Game, playerId: PlayerId) => EntityMutation<EntityType>[];
+export type Action = (game: Game, playerId: PlayerId) => EntityMutation[];
 
 export type Replenishment = {
     ifEmpty: Resources;
     ifNotEmpty: Resources;
 };
 
-export function replenish(actionSpace: ActionSpace): EntityMutation<ActionSpace>[] {
+export function replenish(actionSpace: ActionSpace): Mutation<ActionSpace>[] {
     if (typeof actionSpace.replenishment === "undefined") return [];
 
     if (actionSpace.resources.isEmpty()) {

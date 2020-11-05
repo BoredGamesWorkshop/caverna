@@ -1,4 +1,4 @@
-import { ActionSpace, ActionSpaceId, EntityMutation, EntityType, Game, PlayerId } from "../entity";
+import { ActionSpace, ActionSpaceId, EntityMutation, Game, PlayerId } from "../entity";
 import { bookActionSpace, giveBirthToDwarf } from "./utils";
 
 export const UrgentWishForChildren = {
@@ -6,7 +6,7 @@ export const UrgentWishForChildren = {
     createActionSpace,
 };
 
-function execute(game: Game, playerId: PlayerId): EntityMutation<EntityType>[] {
+function execute(game: Game, playerId: PlayerId): EntityMutation[] {
     const actionSpaceId = ActionSpaceId.URGENT_WISH_FOR_CHILDREN;
     const player = game.getPlayer(playerId);
     const actionSpace = game.actionBoard.getActionSpace(actionSpaceId);

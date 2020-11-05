@@ -2,7 +2,6 @@ import {
     ActionSpace,
     ActionSpaceId,
     EntityMutation,
-    EntityType,
     Game,
     PlayerId,
     Resources,
@@ -20,7 +19,7 @@ const REPLENISH_RESOURCES = {
     ifNotEmpty: new Resources([[ResourceType.WOOD, 1]]),
 };
 
-function execute(game: Game, playerId: PlayerId): EntityMutation<EntityType>[] {
+function execute(game: Game, playerId: PlayerId): EntityMutation[] {
     const actionSpaceId = ActionSpaceId.GATHER_WOOD;
     const player = game.getPlayer(playerId);
     const actionSpace = game.actionBoard.getActionSpace(actionSpaceId);
