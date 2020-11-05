@@ -1,13 +1,6 @@
 import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util";
 import { UrgentWishForChildren } from "./urgentWishForChildren";
-import {
-    ActionSpace,
-    Dwarf,
-    EntityMutation,
-    EntityType,
-    isMutationOfType,
-    Player,
-} from "../entity";
+import { ActionSpace, Dwarf, EntityMutation, isMutationOfType, Mutation, Player } from "../entity";
 import { expect } from "chai";
 
 describe("Urgent Wish for Children", () => {
@@ -46,14 +39,14 @@ describe("Urgent Wish for Children", () => {
             expect(actionSpaceDwarf).to.deep.equal(playerDwarf);
         });
 
-        function getActionSpaceNewDwarf(mutations: EntityMutation<EntityType>[]) {
+        function getActionSpaceNewDwarf(mutations: EntityMutation[]) {
             const actionSpaceMutation = mutations
                 .filter(isMutationOfType(ActionSpace))
                 .filter((mutation) => mutation.diff.newBornDwarf)[0];
             return actionSpaceMutation?.diff?.newBornDwarf;
         }
 
-        function getPlayerNewDwarf(mutations: EntityMutation<EntityType>[], player: Player) {
+        function getPlayerNewDwarf(mutations: EntityMutation[], player: Player) {
             const playerMutation = mutations
                 .filter(isMutationOfType(Player))
                 .filter((mutation) => mutation.diff.dwarfs)[0];
@@ -84,7 +77,7 @@ describe("Urgent Wish for Children", () => {
         });
 
         function findNewDwarf(
-            mutation: EntityMutation<Player>,
+            mutation: Mutation<Player>,
             originalPlayer: Player
         ): Dwarf | undefined {
             const mutationDwarfs = mutation.diff.dwarfs?.values();

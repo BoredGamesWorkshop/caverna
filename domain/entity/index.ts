@@ -6,7 +6,7 @@ export { Furnishing, FurnishingId } from "./Furnishing";
 export { ActionBoard, Game } from "./Game";
 
 export { isMutationOfType } from "./Mutation";
-export type { EntityType, EntityMutation } from "./Mutation";
+export type { EntityMutation, EntityType, Mutation } from "./Mutation";
 
 export { Dwarf, Player } from "./Player";
 export type { DwarfId, PlayerId } from "./Player";
