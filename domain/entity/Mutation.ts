@@ -8,18 +8,17 @@ type Mutation<T> = {
     diff: Partial<T>;
 };
 
-/*
-  Note TS: EntityMutation is equivalent to Mutation<Player> | Mutation<Dwarf> | ...
-
-  Mutation<EntityPlayer> is not satisfying because it doesn't narrow down the type of T to Player, Dwarf & co
-  It checks that both `original` and `diff` are respectively based from any EntityType
-  but not that they are based from the same entity subtype
- */
+// DiscriminateUnion<EntityType> is equivalent to Mutation<Player> | Mutation<Dwarf> | ...
+// It doesn't include the type Mutation<EntityType> that allows "original" and "diff" attributes of different EntityType
 type DiscriminateUnion<T> = T extends any ? Mutation<T> : never;
-export type EntityMutation = DiscriminateUnion<EntityType>;
+
+// The problem is that Mutation<T> is not included in DiscriminateUnion<EntityType> because of Mutation<EntityType>
+// and so we can't use the type guard below to narrow the type of Mutation<T> (see https://github.com/microsoft/TypeScript/issues/24935)
+// To fix that, we create a new type with an intersection to exclude Mutation<EntityType>
+export type EntityMutation<T> = DiscriminateUnion<EntityType> & Mutation<T>;
 
 export function isMutationOfType<T extends EntityType>(classType: { new (): T }) {
-    return function (mutation: Mutation<EntityType>): mutation is Mutation<T> {
+    return function (mutation: EntityMutation<EntityType>): mutation is EntityMutation<T> {
         return mutation.original instanceof classType;
     };
 }

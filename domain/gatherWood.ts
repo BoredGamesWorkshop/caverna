@@ -1,5 +1,5 @@
 import { Game } from "./entity/Game";
-import { EntityMutation } from "./entity/Mutation";
+import { EntityMutation, EntityType } from "./entity/Mutation";
 import { PlayerId } from "./entity/Player";
 import { ActionSpace, ActionSpaceId } from "./entity/ActionSpace";
 import { Resources, ResourceType } from "./entity/Resources";
@@ -11,7 +11,7 @@ export namespace GatherWood {
         ifNotEmpty: new Resources([[ResourceType.WOOD, 1]]),
     };
 
-    export function execute(game: Game, playerId: PlayerId): EntityMutation[] {
+    export function execute(game: Game, playerId: PlayerId): EntityMutation<EntityType>[] {
         const actionSpaceId = ActionSpaceId.GATHER_WOOD;
         const player = game.getPlayer(playerId);
         const actionSpace = game.actionBoard.getActionSpace(actionSpaceId);
