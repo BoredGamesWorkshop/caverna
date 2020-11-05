@@ -4,10 +4,17 @@ import { Game } from "./Game";
 import { Resources } from "./Resources";
 
 export class ActionSpace {
-    constructor(id: ActionSpaceId, action: Action, replenishment?: Replenishment, dwarf?: Dwarf) {
+    constructor(
+        id: ActionSpaceId,
+        action: Action,
+        replenishment?: Replenishment,
+        dwarf?: Dwarf,
+        newBornDwarf?: Dwarf
+    ) {
         this.id = id;
         this.action = action;
         this.dwarf = dwarf;
+        this.newBornDwarf = newBornDwarf;
         this.resources = new Resources();
         this.replenishment = replenishment;
     }
@@ -15,12 +22,14 @@ export class ActionSpace {
     id: ActionSpaceId;
     action: Action;
     dwarf?: Dwarf;
+    newBornDwarf?: Dwarf;
     resources: Resources;
     replenishment?: Replenishment;
 }
 
 export enum ActionSpaceId {
     GATHER_WOOD = "gather_wood",
+    URGENT_WISH_FOR_CHILDREN = "urgent_wish_for_children",
 }
 
 export type Action = (game: Game, playerId: PlayerId) => EntityMutation<EntityType>[];
