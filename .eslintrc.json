@@ -3,7 +3,8 @@
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint", "prettier"],
     "rules": {
-        "prettier/prettier": "error"
+        "prettier/prettier": "error",
+        "@typescript-eslint/no-empty-function": "warn"
     },
     "extends": [
         "eslint:recommended",
