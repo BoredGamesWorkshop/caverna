@@ -1,6 +1,6 @@
 import { Dwarf, Player } from "./Player";
 import { ActionSpace } from "./ActionSpace";
-import { Constructor } from "../util/Constructor";
+import { Constructor } from "../util";
 
 export type EntityType = Player | Dwarf | ActionSpace;
 

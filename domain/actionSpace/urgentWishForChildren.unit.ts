@@ -1,4 +1,4 @@
-import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util/tests";
+import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util";
 import { UrgentWishForChildren } from "./urgentWishForChildren";
 import {
     ActionSpace,

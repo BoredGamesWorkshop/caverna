@@ -9,7 +9,7 @@ import {
     Resources,
     ResourceType,
 } from "../entity";
-import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util/tests";
+import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util";
 
 describe("Gather wood", () => {
     shouldPlaceDwarf(GatherWood.execute);
