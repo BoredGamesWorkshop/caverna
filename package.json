@@ -3,9 +3,11 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
+        "compile": "tsc",
         "dev": "next dev",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "test": "mocha"
     },
     "dependencies": {
         "@types/mocha": "^8.0.3",
