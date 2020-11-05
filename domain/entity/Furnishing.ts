@@ -1,7 +1,10 @@
 import { Resources } from "./Resources";
 
-export class Furnishing {
+export class Tile {}
+
+export class Furnishing extends Tile {
     constructor(id: FurnishingId, price: Resources) {
+        super();
         this.id = id;
         this.price = price;
     }

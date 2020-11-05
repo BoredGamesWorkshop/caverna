@@ -1,10 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
 import { Resources } from "./Resources";
+import { Tile } from "./Furnishing";
 
 export class Player {
     id: PlayerId = uuidv4();
     resources: Resources = new Resources();
     dwarfs: Map<DwarfId, Dwarf> = new Map();
+    tilesToPlace: Tile[] = [];
 
     getFirstAvailableDwarf(): Dwarf {
         const availableDwarfs = Array.from(this.dwarfs.values()).filter(

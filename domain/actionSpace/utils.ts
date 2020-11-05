@@ -1,4 +1,4 @@
-import { ActionSpace, Dwarf, EntityMutation, Furnishing, Player, Resources } from "../entity";
+import { ActionSpace, Dwarf, EntityMutation, Furnishing, Player, Resources, Tile } from "../entity";
 
 export function bookActionSpace(actionSpace: ActionSpace, player: Player): EntityMutation[] {
     const dwarf = player.getFirstAvailableDwarf();
@@ -32,6 +32,7 @@ export function buyFurnishing(furnishing: Furnishing, player: Player): EntityMut
             original: player,
             diff: {
                 resources: player.resources.remove(furnishing.price),
+                tilesToPlace: [furnishing as Tile].concat(player.tilesToPlace.concat()),
             },
         },
     ];

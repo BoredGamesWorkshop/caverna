@@ -107,5 +107,14 @@ describe("Urgent Wish for Children", () => {
         );
     });
 
-    it("should add dwelling to player's store", function () {});
+    it("should add dwelling to player's store", function () {
+        const { game, player } = buildBaseObjects();
+        const dwelling = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING);
+
+        const mutations = UrgentWishForChildren.execute(game, player.id);
+
+        expectMutationsOfType(mutations, Player).toVerifyOnce(
+            (mutation) => mutation.diff.tilesToPlace?.includes(dwelling) === true
+        );
+    });
 });
