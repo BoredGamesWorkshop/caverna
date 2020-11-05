@@ -1,4 +1,4 @@
-import { EntityMutation, isMutationOfType } from "./entity/Mutation";
+import { EntityMutation, EntityType, isMutationOfType } from "./entity/Mutation";
 import { expect } from "chai";
 import { buildInitialGame } from "./initializeGame";
 import { Action, ActionSpace } from "./entity/ActionSpace";
@@ -35,12 +35,12 @@ export function buildBaseObjects() {
 }
 
 export function expectMutationsOfType<T extends EntityType>(
-    mutations: EntityMutation[],
+    mutations: EntityMutation<EntityType>[],
     classType: { new (...arg: any): T }
 ) {
     const mutationsT = mutations.filter(isMutationOfType(classType));
     return {
-        toVerifyOnce: (check: (mutation: EntityMutation) => boolean) => {
+        toVerifyOnce: (check: (mutation: EntityMutation<T>) => boolean) => {
             expect(mutationsT.filter((mutation) => check(mutation))).to.have.lengthOf(1);
         },
     };
