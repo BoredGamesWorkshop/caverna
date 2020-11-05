@@ -13,6 +13,6 @@ function execute(game: Game, playerId: PlayerId): EntityMutation<EntityType>[] {
     return [...bookActionSpace(actionSpace, player), ...giveBirthToDwarf(actionSpace, player)];
 }
 
-function createActionSpace() {
+function createActionSpace(): ActionSpace {
     return new ActionSpace(ActionSpaceId.URGENT_WISH_FOR_CHILDREN, execute);
 }
