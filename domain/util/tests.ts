@@ -13,10 +13,14 @@ import { expect } from "chai";
 import { buildInitialGame } from "../initializeGame";
 import { Constructor } from "./Constructor";
 
-export function shouldPlaceDwarf(action: Action): void {
+export function shouldPlaceDwarf(
+    action: Action,
+    initialization?: (game: Game, player: Player) => any
+): void {
     describe("should place a dwarf", () => {
         it("should use a dwarf", () => {
             const { game, player } = buildBaseObjects();
+            initialization?.(game, player);
 
             const mutations = action(game, player.id);
 
@@ -27,6 +31,7 @@ export function shouldPlaceDwarf(action: Action): void {
 
         it("should use an action space", () => {
             const { game, player } = buildBaseObjects();
+            initialization?.(game, player);
 
             const mutations = action(game, player.id);
 

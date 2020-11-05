@@ -49,7 +49,7 @@ describe("Gather wood", () => {
         const { game, player } = buildBaseObjects();
         makeAllDwarfsBusy();
 
-        expect(() => GatherWood.execute(game, player.id)).to.throw;
+        expect(() => GatherWood.execute(game, player.id)).to.throw();
 
         function makeAllDwarfsBusy() {
             player.dwarfs.forEach((dwarf) => (dwarf.isAvailable = false));

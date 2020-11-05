@@ -6,17 +6,18 @@ import {
     Dwarf,
     EntityMutation,
     FurnishingId,
+    Game,
     isMutationOfType,
     Mutation,
     Player,
 } from "../entity";
 
 describe("Urgent Wish for Children", () => {
-    shouldPlaceDwarf(UrgentWishForChildren.execute);
+    shouldPlaceDwarf(UrgentWishForChildren.execute, initPlayerFonds);
 
     describe("should create and place a new dwarf", () => {
         it("should add new dwarf to player", function () {
-            const { game, player } = buildBaseObjects();
+            const { game, player } = buildUrgentWishBaseObjects();
             const playerInitialDwarfsNb = player.dwarfs.size;
 
             const mutations = UrgentWishForChildren.execute(game, player.id);
@@ -27,7 +28,7 @@ describe("Urgent Wish for Children", () => {
         });
 
         it("should add new dwarf to action space", function () {
-            const { game, player } = buildBaseObjects();
+            const { game, player } = buildUrgentWishBaseObjects();
 
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
@@ -37,7 +38,7 @@ describe("Urgent Wish for Children", () => {
         });
 
         it("new dwarf should be the same for player and action space", function () {
-            const { game, player } = buildBaseObjects();
+            const { game, player } = buildUrgentWishBaseObjects();
 
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
@@ -64,7 +65,7 @@ describe("Urgent Wish for Children", () => {
 
         describe("new dwarf should be busy", function () {
             it("new player's dwarf should be busy", function () {
-                const { game, player } = buildBaseObjects();
+                const { game, player } = buildUrgentWishBaseObjects();
 
                 const mutations = UrgentWishForChildren.execute(game, player.id);
 
@@ -74,7 +75,7 @@ describe("Urgent Wish for Children", () => {
             });
 
             it("new action space dwarf should be busy", function () {
-                const { game, player } = buildBaseObjects();
+                const { game, player } = buildUrgentWishBaseObjects();
 
                 const mutations = UrgentWishForChildren.execute(game, player.id);
 
@@ -95,10 +96,10 @@ describe("Urgent Wish for Children", () => {
             );
         }
     });
+
     describe("should buy dwelling", function () {
         it("should pay for dwelling", function () {
-            const { game, player } = buildBaseObjects();
-            player.resources = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
+            const { game, player } = buildUrgentWishBaseObjects();
 
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
@@ -107,8 +108,14 @@ describe("Urgent Wish for Children", () => {
             );
         });
 
-        it("should add dwelling to player's store", function () {
+        it("should throw if player fonds not enough", function () {
             const { game, player } = buildBaseObjects();
+
+            expect(() => UrgentWishForChildren.execute(game, player.id)).to.throw();
+        });
+
+        it("should add dwelling to player's store", function () {
+            const { game, player } = buildUrgentWishBaseObjects();
             const dwelling = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING);
 
             const mutations = UrgentWishForChildren.execute(game, player.id);
@@ -118,4 +125,14 @@ describe("Urgent Wish for Children", () => {
             );
         });
     });
+
+    function buildUrgentWishBaseObjects() {
+        const { game, player } = buildBaseObjects();
+        initPlayerFonds(game, player);
+        return { game, player };
+    }
+
+    function initPlayerFonds(game: Game, player: Player) {
+        player.resources = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
+    }
 });
