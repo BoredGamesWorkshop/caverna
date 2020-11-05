@@ -1,8 +1,11 @@
-import { ActionBoard, Dwarf, Game, Player } from "./entity";
+import { ActionBoard, Dwarf, FurnishingBoard, Game, Player } from "./entity";
 import { GatherWood, UrgentWishForChildren } from "./actionSpace";
+import { Dwelling } from "./furnishing";
 
 export function buildInitialGame(): Game {
-    return new Game(buildInitialActionBoard(), [buildInitialPlayer()]);
+    return new Game(buildInitialActionBoard(), buildInitialFurnishingBoard(), [
+        buildInitialPlayer(),
+    ]);
 }
 
 export function buildInitialActionBoard(): ActionBoard {
@@ -10,6 +13,10 @@ export function buildInitialActionBoard(): ActionBoard {
         GatherWood.createActionSpace(),
         UrgentWishForChildren.createActionSpace(),
     ]);
+}
+
+export function buildInitialFurnishingBoard(): FurnishingBoard {
+    return new FurnishingBoard([Dwelling.createFurnishing()]);
 }
 
 export function buildInitialPlayer(): Player {
