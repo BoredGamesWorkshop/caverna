@@ -1,5 +1,5 @@
 module.exports = {
     require: "ts-node/register",
-    extensions: ["js", "ts"],
-    spec: ["**/*.unit.{ts,js}"],
+    extensions: ["js", "ts", "jsx", "tsx"],
+    spec: ["**/*.unit.{js,ts,jsx,tsx}"],
 };
