@@ -5,7 +5,7 @@
     "scripts": {
         "compile": "tsc",
         "dev": "next dev",
-        "lint": "eslint .",
+        "lint": "eslint --cache .",
         "build": "next build",
         "start": "next start",
         "test": "mocha"

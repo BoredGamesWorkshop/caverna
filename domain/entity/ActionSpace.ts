@@ -39,15 +39,19 @@ export type Replenishment = {
     ifNotEmpty: Resources;
 };
 
-export function replenish(actionSpace: ActionSpace) {
-    if (typeof actionSpace.replenishment === "undefined") return;
+export function replenish(actionSpace: ActionSpace): EntityMutation<ActionSpace>[] {
+    if (typeof actionSpace.replenishment === "undefined") return [];
 
     if (actionSpace.resources.isEmpty()) {
-        return { original: actionSpace, diff: { resources: actionSpace.replenishment.ifEmpty } };
+        return [{ original: actionSpace, diff: { resources: actionSpace.replenishment.ifEmpty } }];
     } else {
-        return {
-            original: actionSpace,
-            diff: { resources: actionSpace.resources.add(actionSpace.replenishment.ifNotEmpty) },
-        };
+        return [
+            {
+                original: actionSpace,
+                diff: {
+                    resources: actionSpace.resources.add(actionSpace.replenishment.ifNotEmpty),
+                },
+            },
+        ];
     }
 }

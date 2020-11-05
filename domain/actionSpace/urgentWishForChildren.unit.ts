@@ -1,8 +1,13 @@
-import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "./testUtils";
+import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util";
 import { UrgentWishForChildren } from "./urgentWishForChildren";
-import { Dwarf, Player } from "./entity/Player";
-import { ActionSpace } from "./entity/ActionSpace";
-import { EntityMutation, EntityType, isMutationOfType } from "./entity/Mutation";
+import {
+    ActionSpace,
+    Dwarf,
+    EntityMutation,
+    EntityType,
+    isMutationOfType,
+    Player,
+} from "../entity";
 import { expect } from "chai";
 
 describe("Urgent Wish for Children", () => {

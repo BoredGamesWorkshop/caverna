@@ -9,7 +9,7 @@ export class Game {
     actionBoard: ActionBoard = new ActionBoard([]);
     players: Map<PlayerId, Player> = new Map();
 
-    getPlayer(id: PlayerId) {
+    getPlayer(id: PlayerId): Player {
         const player = this.players.get(id);
         if (typeof player === "undefined") {
             throw new Error("Internal Error: Player not found");
@@ -26,7 +26,7 @@ export class ActionBoard {
     }
     actionSpaces: Map<ActionSpaceId, ActionSpace> = new Map();
 
-    getActionSpace(id: ActionSpaceId) {
+    getActionSpace(id: ActionSpaceId): ActionSpace {
         const actionSpace = this.actionSpaces.get(id);
         if (typeof actionSpace === "undefined") {
             throw new Error("Internal Error: Action space not found");

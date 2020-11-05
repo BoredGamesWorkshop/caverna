@@ -6,7 +6,7 @@ export class Player {
     resources: Resources = new Resources();
     dwarfs: Map<DwarfId, Dwarf> = new Map();
 
-    getFirstAvailableDwarf() {
+    getFirstAvailableDwarf(): Dwarf {
         const availableDwarfs = Array.from(this.dwarfs.values()).filter(
             (dwarf) => dwarf.isAvailable
         );
@@ -21,7 +21,7 @@ export type PlayerId = string;
 
 export class Dwarf {
     id: DwarfId = uuidv4();
-    isAvailable: boolean = true;
+    isAvailable = true;
 }
 
 export type DwarfId = string;
