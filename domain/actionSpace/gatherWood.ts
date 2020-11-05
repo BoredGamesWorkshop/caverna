@@ -1,8 +1,8 @@
-import { Game } from "./entity/Game";
-import { EntityMutation, EntityType } from "./entity/Mutation";
-import { PlayerId } from "./entity/Player";
-import { ActionSpace, ActionSpaceId } from "./entity/ActionSpace";
-import { Resources, ResourceType } from "./entity/Resources";
+import { Game } from "../entity/Game";
+import { EntityMutation, EntityType } from "../entity/Mutation";
+import { PlayerId } from "../entity/Player";
+import { ActionSpace, ActionSpaceId } from "../entity/ActionSpace";
+import { Resources, ResourceType } from "../entity/Resources";
 import { bookActionSpace, takeResources } from "./actionUtils";
 
 export const GatherWood = {

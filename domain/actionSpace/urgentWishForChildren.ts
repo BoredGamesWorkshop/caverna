@@ -1,7 +1,7 @@
-import { PlayerId } from "./entity/Player";
-import { EntityMutation, EntityType } from "./entity/Mutation";
-import { Game } from "./entity/Game";
-import { ActionSpace, ActionSpaceId } from "./entity/ActionSpace";
+import { PlayerId } from "../entity/Player";
+import { EntityMutation, EntityType } from "../entity/Mutation";
+import { Game } from "../entity/Game";
+import { ActionSpace, ActionSpaceId } from "../entity/ActionSpace";
 import { bookActionSpace, giveBirthToDwarf } from "./actionUtils";
 
 export namespace UrgentWishForChildren {

@@ -1,13 +1,13 @@
-import { GatherWood } from "./gatherWood";
+import { GatherWood } from "./actionSpace/gatherWood";
 import { ActionBoard, Game } from "./entity/Game";
 import { Dwarf, Player } from "./entity/Player";
-import { UrgentWishForChildren } from "./urgentWishForChildren";
+import { UrgentWishForChildren } from "./actionSpace/urgentWishForChildren";
 
 export function buildInitialGame(): Game {
     return new Game(buildInitialActionBoard(), [buildInitialPlayer()]);
 }
 
-export function buildInitialActionBoard() : ActionBoard {
+export function buildInitialActionBoard(): ActionBoard {
     return new ActionBoard([
         GatherWood.createActionSpace(),
         UrgentWishForChildren.createActionSpace(),
