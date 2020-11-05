@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util";
+import { buildBaseObjects, EntityFactory, expectMutationsOfType, shouldPlaceDwarf } from "../util";
 import { UrgentWishForChildren } from "./urgentWishForChildren";
 import {
     ActionSpace,
@@ -62,6 +62,13 @@ describe("Urgent Wish for Children", () => {
 
             return findNewDwarf(playerMutation, player);
         }
+
+        it("should throw if player reached max dwarfs number", function () {
+            const { game, player } = buildUrgentWishBaseObjects();
+            player.dwarfs = EntityFactory.createDwarfs(Player.MAX_DWARFS_NUMBER);
+
+            expect(() => UrgentWishForChildren.execute(game, player.id)).to.throw();
+        });
 
         describe("new dwarf should be busy", function () {
             it("new player's dwarf should be busy", function () {

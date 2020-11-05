@@ -16,6 +16,7 @@ export function takeResources(actionSpace: ActionSpace, player: Player): EntityM
 }
 
 export function giveBirthToDwarf(actionSpace: ActionSpace, player: Player): EntityMutation[] {
+    checkPlayerCanHaveMoreDwarf(player);
     const newDwarf = new Dwarf();
     newDwarf.isAvailable = false;
     const newPlayerDwarfs = new Map(player.dwarfs);
@@ -24,6 +25,12 @@ export function giveBirthToDwarf(actionSpace: ActionSpace, player: Player): Enti
         { original: player, diff: { dwarfs: newPlayerDwarfs } },
         { original: actionSpace, diff: { newBornDwarf: newDwarf } },
     ];
+}
+
+function checkPlayerCanHaveMoreDwarf(player: Player) {
+    if (player.dwarfs.size >= Player.MAX_DWARFS_NUMBER) {
+        throw Error("Max dwarf number reached");
+    }
 }
 
 export function buyFurnishing(furnishing: Furnishing, player: Player): EntityMutation[] {
