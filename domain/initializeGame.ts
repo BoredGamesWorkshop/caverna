@@ -7,7 +7,7 @@ export function buildInitialGame(): Game {
     return new Game(buildInitialActionBoard(), [buildInitialPlayer()]);
 }
 
-export function buildInitialActionBoard() {
+export function buildInitialActionBoard() : ActionBoard {
     return new ActionBoard([
         GatherWood.createActionSpace(),
         UrgentWishForChildren.createActionSpace(),
