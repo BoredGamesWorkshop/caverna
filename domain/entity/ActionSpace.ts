@@ -30,6 +30,7 @@ export class ActionSpace {
 export enum ActionSpaceId {
     GATHER_WOOD = "gather_wood",
     URGENT_WISH_FOR_CHILDREN = "urgent_wish_for_children",
+    EXCAVATION = "excavation",
 }
 
 export type Action = (game: Game, playerId: PlayerId) => EntityMutation[];
