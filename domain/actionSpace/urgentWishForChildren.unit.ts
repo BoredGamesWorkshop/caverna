@@ -10,11 +10,18 @@ import {
     isMutationOfType,
     Mutation,
     Player,
+    Resources,
+    ResourceType,
 } from "../entity";
+import _ from "lodash";
 
 describe("Urgent Wish for Children", () => {
     let game: Game;
     let player: Player;
+    const playerInitialResources = new Resources([
+        [ResourceType.WOOD, 3],
+        [ResourceType.STONE, 1],
+    ]);
 
     beforeEach(() => ({ game, player } = buildUrgentWishBaseObjects()));
 
@@ -107,13 +114,15 @@ describe("Urgent Wish for Children", () => {
         it("should pay for dwelling", function () {
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
-            expectMutationsOfType(mutations, Player).toVerifyOnce(
-                (mutation) => mutation.diff.resources?.isEmpty() === true
+            mutations.filter(isMutationOfType(Player));
+
+            expectMutationsOfType(mutations, Player).toVerifyOnce((mutation) =>
+                _.isEqual(mutation.diff.resources, playerInitialResources)
             );
         });
 
         it("should throw if player doesn't have enough resources", function () {
-            const { game, player } = buildBaseObjects();
+            player.resources = playerInitialResources;
 
             expect(() => UrgentWishForChildren.execute(game, player.id)).to.throw();
         });
@@ -136,6 +145,7 @@ describe("Urgent Wish for Children", () => {
     }
 
     function initPlayerResources(game: Game, player: Player) {
-        player.resources = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
+        const price = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
+        player.resources = playerInitialResources.add(price);
     }
 });
