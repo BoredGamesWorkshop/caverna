@@ -1,5 +1,5 @@
+import { expect } from "chai";
 import {
-    Action,
     ActionSpace,
     Dwarf,
     EntityMutation,
@@ -9,37 +9,14 @@ import {
     Mutation,
     Player,
 } from "../entity";
-import { expect } from "chai";
 import { buildInitialGame } from "../initializeGame";
 import { Constructor } from "./Constructor";
 
-export function shouldPlaceDwarf(
-    action: Action,
-    initialization?: (game: Game, player: Player) => any
-): void {
-    describe("should place a dwarf", () => {
-        it("should use a dwarf", () => {
-            const { game, player } = buildBaseObjects();
-            initialization?.(game, player);
-
-            const mutations = action(game, player.id);
-
-            expectMutationsOfType(mutations, Dwarf).toVerifyOnce(
-                (mutation) => mutation.diff.isAvailable === false
-            );
-        });
-
-        it("should use an action space", () => {
-            const { game, player } = buildBaseObjects();
-            initialization?.(game, player);
-
-            const mutations = action(game, player.id);
-
-            expectMutationsOfType(mutations, ActionSpace).toVerifyOnce(
-                (mutation) => !!mutation.diff.dwarf
-            );
-        });
-    });
+export function expectPlaceDwarf(mutations: EntityMutation[]): void {
+    expectMutationsOfType(mutations, Dwarf).toVerifyOnce(
+        (mutation) => mutation.diff.isAvailable === false
+    );
+    expectMutationsOfType(mutations, ActionSpace).toVerifyOnce((mutation) => !!mutation.diff.dwarf);
 }
 
 type BaseObjectsForTests = { game: Game; player: Player };

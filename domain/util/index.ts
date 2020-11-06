@@ -1,3 +1,3 @@
 export type { Constructor } from "./Constructor";
 export { EntityFactory } from "./EntityFactory";
-export { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "./tests";
+export { buildBaseObjects, expectMutationsOfType, expectPlaceDwarf } from "./tests";

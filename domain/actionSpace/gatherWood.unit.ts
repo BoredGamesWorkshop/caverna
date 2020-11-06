@@ -9,10 +9,16 @@ import {
     Resources,
     ResourceType,
 } from "../entity";
-import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util";
+import { buildBaseObjects, expectMutationsOfType, expectPlaceDwarf } from "../util";
 
 describe("Gather wood", () => {
-    shouldPlaceDwarf(GatherWood.execute);
+    it("should place dwarf", function () {
+        const { game, player } = buildBaseObjects();
+
+        const mutations = GatherWood.execute(game, player.id);
+
+        expectPlaceDwarf(mutations);
+    });
 
     describe("should gather wood", () => {
         it("should add wood to the player's resources", () => {

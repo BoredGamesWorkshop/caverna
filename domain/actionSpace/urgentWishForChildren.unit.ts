@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { buildBaseObjects, EntityFactory, expectMutationsOfType, shouldPlaceDwarf } from "../util";
+import { buildBaseObjects, EntityFactory, expectMutationsOfType, expectPlaceDwarf } from "../util";
 import { UrgentWishForChildren } from "./urgentWishForChildren";
 import {
     ActionSpace,
@@ -18,7 +18,11 @@ describe("Urgent Wish for Children", () => {
 
     beforeEach(() => ({ game, player } = buildUrgentWishBaseObjects()));
 
-    shouldPlaceDwarf(UrgentWishForChildren.execute, initPlayerResources);
+    it("should place dwarf", function () {
+        const mutations = UrgentWishForChildren.execute(game, player.id);
+
+        expectPlaceDwarf(mutations);
+    });
 
     describe("should create and place a new dwarf", () => {
         it("should add new dwarf to player", function () {
