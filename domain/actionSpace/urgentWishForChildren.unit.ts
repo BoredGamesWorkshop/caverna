@@ -13,11 +13,15 @@ import {
 } from "../entity";
 
 describe("Urgent Wish for Children", () => {
+    let game: Game;
+    let player: Player;
+
+    beforeEach(() => ({ game, player } = buildUrgentWishBaseObjects()));
+
     shouldPlaceDwarf(UrgentWishForChildren.execute, initPlayerResources);
 
     describe("should create and place a new dwarf", () => {
         it("should add new dwarf to player", function () {
-            const { game, player } = buildUrgentWishBaseObjects();
             const playerInitialDwarfsNb = player.dwarfs.size;
 
             const mutations = UrgentWishForChildren.execute(game, player.id);
@@ -28,8 +32,6 @@ describe("Urgent Wish for Children", () => {
         });
 
         it("should add new dwarf to action space", function () {
-            const { game, player } = buildUrgentWishBaseObjects();
-
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
             expectMutationsOfType(mutations, ActionSpace).toVerifyOnce(
@@ -38,8 +40,6 @@ describe("Urgent Wish for Children", () => {
         });
 
         it("new dwarf should be the same for player and action space", function () {
-            const { game, player } = buildUrgentWishBaseObjects();
-
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
             const actionSpaceDwarf = getActionSpaceNewDwarf(mutations);
@@ -64,7 +64,6 @@ describe("Urgent Wish for Children", () => {
         }
 
         it("should throw if player reached max dwarfs number", function () {
-            const { game, player } = buildUrgentWishBaseObjects();
             player.dwarfs = EntityFactory.createDwarfs(Player.MAX_DWARFS_NUMBER);
 
             expect(() => UrgentWishForChildren.execute(game, player.id)).to.throw();
@@ -72,8 +71,6 @@ describe("Urgent Wish for Children", () => {
 
         describe("new dwarf should be busy", function () {
             it("new player's dwarf should be busy", function () {
-                const { game, player } = buildUrgentWishBaseObjects();
-
                 const mutations = UrgentWishForChildren.execute(game, player.id);
 
                 expectMutationsOfType(mutations, Player).toVerifyOnce(
@@ -82,8 +79,6 @@ describe("Urgent Wish for Children", () => {
             });
 
             it("new action space dwarf should be busy", function () {
-                const { game, player } = buildUrgentWishBaseObjects();
-
                 const mutations = UrgentWishForChildren.execute(game, player.id);
 
                 expectMutationsOfType(mutations, ActionSpace).toVerifyOnce(
@@ -106,8 +101,6 @@ describe("Urgent Wish for Children", () => {
 
     describe("should buy dwelling", function () {
         it("should pay for dwelling", function () {
-            const { game, player } = buildUrgentWishBaseObjects();
-
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
             expectMutationsOfType(mutations, Player).toVerifyOnce(
@@ -122,7 +115,6 @@ describe("Urgent Wish for Children", () => {
         });
 
         it("should add dwelling to player's store", function () {
-            const { game, player } = buildUrgentWishBaseObjects();
             const dwelling = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING);
 
             const mutations = UrgentWishForChildren.execute(game, player.id);
