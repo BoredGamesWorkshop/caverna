@@ -34,7 +34,7 @@ function checkPlayerCanHaveMoreDwarf(player: Player) {
 }
 
 export function buyFurnishing(furnishing: Furnishing, player: Player): EntityMutation[] {
-    checkPlayerHasEnoughFonds(player, furnishing.price);
+    checkPlayerHasEnoughResources(player, furnishing.price);
     return [
         {
             original: player,
@@ -45,10 +45,10 @@ export function buyFurnishing(furnishing: Furnishing, player: Player): EntityMut
         },
     ];
 
-    function checkPlayerHasEnoughFonds(player: Player, price: Resources) {
+    function checkPlayerHasEnoughResources(player: Player, price: Resources) {
         for (const type of price.keys()) {
             if ((player.resources.get(type) || 0) < (price.get(type) || 0)) {
-                throw Error("Not enough fonds");
+                throw Error("Not enough resources");
             }
         }
     }

@@ -13,7 +13,7 @@ import {
 } from "../entity";
 
 describe("Urgent Wish for Children", () => {
-    shouldPlaceDwarf(UrgentWishForChildren.execute, initPlayerFonds);
+    shouldPlaceDwarf(UrgentWishForChildren.execute, initPlayerResources);
 
     describe("should create and place a new dwarf", () => {
         it("should add new dwarf to player", function () {
@@ -115,7 +115,7 @@ describe("Urgent Wish for Children", () => {
             );
         });
 
-        it("should throw if player fonds not enough", function () {
+        it("should throw if player doesn't have enough resources", function () {
             const { game, player } = buildBaseObjects();
 
             expect(() => UrgentWishForChildren.execute(game, player.id)).to.throw();
@@ -135,11 +135,11 @@ describe("Urgent Wish for Children", () => {
 
     function buildUrgentWishBaseObjects() {
         const { game, player } = buildBaseObjects();
-        initPlayerFonds(game, player);
+        initPlayerResources(game, player);
         return { game, player };
     }
 
-    function initPlayerFonds(game: Game, player: Player) {
+    function initPlayerResources(game: Game, player: Player) {
         player.resources = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
     }
 });
