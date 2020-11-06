@@ -7,20 +7,20 @@ describe("Excavation", () => {
     shouldPlaceDwarf(Excavation.execute);
 
     describe("should gather the stone", () => {
-        it("should add wood to the player's resources", () => {
+        it("should add stone to the player's resources", () => {
             const { game, player } = buildBaseObjects();
-            addStoneToActionSpace(game, 2);
+            addStoneToActionSpace(game, 5);
 
             const mutations = Excavation.execute(game, player.id);
 
             expectMutationsOfType(mutations, Player).toVerifyOnce(
-                (mutation) => mutation.diff.resources?.get(ResourceType.WOOD) === 2
+                (mutation) => mutation.diff.resources?.get(ResourceType.STONE) === 5
             );
         });
 
-        it("should remove action space's wood", () => {
+        it("should remove action space's stone", () => {
             const { game, player } = buildBaseObjects();
-            addStoneToActionSpace(game, 3);
+            addStoneToActionSpace(game, 5);
 
             const mutations = Excavation.execute(game, player.id);
 
@@ -30,7 +30,7 @@ describe("Excavation", () => {
         });
 
         function addStoneToActionSpace(game: Game, nbStone: number) {
-            const actionSpace = game.actionBoard.getActionSpace(ActionSpaceId.GATHER_WOOD);
+            const actionSpace = game.actionBoard.getActionSpace(ActionSpaceId.EXCAVATION);
             actionSpace.resources = actionSpace.resources.add(
                 new Resources([[ResourceType.STONE, nbStone]])
             );
