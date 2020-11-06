@@ -15,7 +15,7 @@ export const GatherWood = {
 };
 
 const REPLENISH_RESOURCES = {
-    ifEmpty: new Resources([[ResourceType.WOOD, 3]]),
+    ifEmpty: new Resources([[ResourceType.WOOD, 1]]),
     ifNotEmpty: new Resources([[ResourceType.WOOD, 1]]),
 };
 
