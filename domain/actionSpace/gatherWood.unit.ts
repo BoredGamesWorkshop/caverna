@@ -12,9 +12,12 @@ import {
 import { buildBaseObjects, expectMutationsOfType, expectPlaceDwarf } from "../util";
 
 describe("Gather wood", () => {
-    it("should place dwarf", function () {
-        const { game, player } = buildBaseObjects();
+    let game: Game;
+    let player: Player;
 
+    beforeEach(() => ({ game, player } = buildBaseObjects()));
+
+    it("should place dwarf", function () {
         const mutations = GatherWood.execute(game, player.id);
 
         expectPlaceDwarf(mutations);
@@ -22,7 +25,6 @@ describe("Gather wood", () => {
 
     describe("should gather wood", () => {
         it("should add wood to the player's resources", () => {
-            const { game, player } = buildBaseObjects();
             addWood(game, 2);
 
             const mutations = GatherWood.execute(game, player.id);
@@ -33,7 +35,6 @@ describe("Gather wood", () => {
         });
 
         it("should remove action space's wood", () => {
-            const { game, player } = buildBaseObjects();
             addWood(game, 3);
 
             const mutations = GatherWood.execute(game, player.id);
@@ -52,7 +53,6 @@ describe("Gather wood", () => {
     });
 
     it("should throw if no dwarf is available", () => {
-        const { game, player } = buildBaseObjects();
         makeAllDwarfsBusy();
 
         expect(() => GatherWood.execute(game, player.id)).to.throw();
@@ -63,7 +63,6 @@ describe("Gather wood", () => {
     });
 
     it("should throw if the action space is not available", () => {
-        const { game, player } = buildBaseObjects();
         addAnotherDwarfOnActionSpace();
 
         expect(() => GatherWood.execute(game, player.id)).to.throw;

@@ -10,6 +10,7 @@ import {
     Player,
 } from "../entity";
 import { buildInitialGame } from "../initializeGame";
+
 import { Constructor } from "./Constructor";
 
 export function expectPlaceDwarf(mutations: EntityMutation[]): void {
