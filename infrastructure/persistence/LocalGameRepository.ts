@@ -94,7 +94,7 @@ export class LocalGameRepository implements GameRepository {
         this.updateDwarf({ original: dwarf, diff: dwarf });
     };
 
-    createGame = (game: Game): void => {
+    saveGame = (game: Game): void => {
         this.game.update(game);
         this.saveActionSpaces(game.actionBoard.actionSpaces);
         this.saveFurnishings(game.furnishingBoard.furnishings);
