@@ -33,10 +33,10 @@ export class StoredActionSpace {
     update(actionSpace: Partial<ActionSpace>): void {
         if (actionSpace.id) this.id = actionSpace.id;
         if (actionSpace.action) this.action = actionSpace.action;
-        if (actionSpace.dwarf) this.dwarfId = actionSpace.dwarf?.id;
-        if (actionSpace.newBornDwarf) this.newBornDwarfId = actionSpace.newBornDwarf?.id;
+        if ("dwarf" in actionSpace) this.dwarfId = actionSpace.dwarf?.id;
+        if ("newBornDwarf" in actionSpace) this.newBornDwarfId = actionSpace.newBornDwarf?.id;
         if (actionSpace.resources) this.resources = actionSpace.resources;
-        if (actionSpace.replenishment) this.replenishment = actionSpace.replenishment;
+        if ("replenishment" in actionSpace) this.replenishment = actionSpace.replenishment;
     }
 }
 
