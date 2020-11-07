@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { Resources } from "./Resources";
-import { Tile } from "./Furnishing";
+import { Tile } from "./Tile";
 
 export class Player {
     static MAX_DWARFS_NUMBER = 5;
