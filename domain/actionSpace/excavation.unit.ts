@@ -1,17 +1,28 @@
 import { Excavation } from "./excavation";
-import { ActionSpace, ActionSpaceId, Game, Player, Resources, ResourceType } from "../entity";
-import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util";
-import { expect } from "chai";
+import { ActionSpace, ActionSpaceId, Game, Player, Resources, ResourceType, Tile } from "../entity";
+import { buildBaseObjects, expectMutationsOfType, expectPlaceDwarf } from "../util";
+import { CavernId } from "../entity/Tile";
+import { GatherWood } from "./gatherWood";
 
 describe("Excavation", () => {
-    shouldPlaceDwarf(Excavation.execute);
+    let game: Game;
+    let player: Player;
+
+    beforeEach(() => ({ game, player } = buildBaseObjects()));
+
+    it("should place dwarf", function () {
+        const mutations = GatherWood.execute(game, player.id);
+
+        expectPlaceDwarf(mutations);
+    });
 
     describe("should gather the stone", () => {
         it("should add stone to the player's resources", () => {
-            const { game, player } = buildBaseObjects();
             addStoneToActionSpace(game, 5);
 
-            const mutations = Excavation.execute(game, player.id);
+            const mutations = Excavation.execute(game, player.id, [
+                new Tile(CavernId.CAVERN_TUNNEL),
+            ]);
 
             expectMutationsOfType(mutations, Player).toVerifyOnce(
                 (mutation) => mutation.diff.resources?.get(ResourceType.STONE) === 5
@@ -19,10 +30,11 @@ describe("Excavation", () => {
         });
 
         it("should remove action space's stone", () => {
-            const { game, player } = buildBaseObjects();
             addStoneToActionSpace(game, 5);
 
-            const mutations = Excavation.execute(game, player.id);
+            const mutations = Excavation.execute(game, player.id, [
+                new Tile(CavernId.CAVERN_TUNNEL),
+            ]);
 
             expectMutationsOfType(mutations, ActionSpace).toVerifyOnce(
                 (mutation) => mutation.diff.resources?.isEmpty() === true
@@ -39,11 +51,29 @@ describe("Excavation", () => {
 
     describe("should place a tile", () => {
         it("should place a CavernTunnel tile", () => {
-            expect(false).to.be.ok; //TODO: implement this test
+            const mutations = Excavation.execute(game, player.id, [
+                new Tile(CavernId.CAVERN_TUNNEL),
+            ]);
+
+            expectMutationsOfType(mutations, Player).toVerifyOnce(
+                (mutation) =>
+                    !!mutation.diff.tilesToPlace?.filter(
+                        (tile) => tile.id === CavernId.CAVERN_TUNNEL
+                    )
+            );
         });
 
         it("should place a CavernCavern tile", () => {
-            expect(false).to.be.ok; //TODO: implement this test
+            const mutations = Excavation.execute(game, player.id, [
+                new Tile(CavernId.CAVERN_CAVERN),
+            ]);
+
+            expectMutationsOfType(mutations, Player).toVerifyOnce(
+                (mutation) =>
+                    !!mutation.diff.tilesToPlace?.filter(
+                        (tile) => tile.id === CavernId.CAVERN_CAVERN
+                    )
+            );
         });
     });
 });
