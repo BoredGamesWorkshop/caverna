@@ -1,11 +1,13 @@
 import { GameRepository } from "../../domain/repository";
 import {
+    ActionBoard,
     ActionSpace,
     ActionSpaceId,
     Dwarf,
     DwarfId,
     EntityMutation,
     Furnishing,
+    FurnishingBoard,
     FurnishingId,
     Game,
     isMutationOfType,
@@ -99,5 +101,72 @@ export class LocalGameRepository implements GameRepository {
         this.saveActionSpaces(game.actionBoard.actionSpaces);
         this.saveFurnishings(game.furnishingBoard.furnishings);
         this.savePlayers(game.players);
+    };
+
+    getGame = (): Game => {
+        return new Game(this.getActionBoard(), this.getFurnishingBoard(), this.getPlayers());
+    };
+
+    private getActionBoard = () => {
+        const actionSpaces = this.game.actionSpaceIds.map((id) => this.getActionSpace(id));
+        return new ActionBoard(actionSpaces);
+    };
+
+    private getActionSpace = (id: string) => {
+        const storedActionSpace = this.actionSpaces.get(id);
+        if (typeof storedActionSpace === "undefined") {
+            throw Error("Internal Error: Action space not found. Id: " + id);
+        }
+
+        return new ActionSpace(
+            storedActionSpace.id as ActionSpaceId,
+            storedActionSpace.action,
+            storedActionSpace.replenishment,
+            this.getDwarfIfNotNull(storedActionSpace.dwarfId),
+            this.getDwarfIfNotNull(storedActionSpace.newBornDwarfId)
+        );
+    };
+
+    private getDwarfIfNotNull(id?: string): Dwarf | undefined {
+        return typeof id === "undefined" ? undefined : this.getDwarfIfNotNull(id);
+    }
+
+    private getDwarf = (id: string) => {
+        const storedDwarf = this.dwarfs.get(id);
+        if (typeof storedDwarf === "undefined") {
+            throw Error("Internal Error: Dwarf not found. Id: " + id);
+        }
+        return new Dwarf(storedDwarf.id as DwarfId, storedDwarf.isAvailable);
+    };
+
+    private getFurnishingBoard = () => {
+        const furnishings = this.game.furnishingIds.map((id) => this.getFurnishing(id));
+        return new FurnishingBoard(furnishings);
+    };
+
+    private getFurnishing(id: string) {
+        const storedFurnishing = this.furnishings.get(id);
+        if (typeof storedFurnishing === "undefined") {
+            throw Error("Internal Error: Furnishing not found. Id: " + id);
+        }
+        return new Furnishing(storedFurnishing.id as FurnishingId, storedFurnishing.price);
+    }
+
+    private getPlayers = () => {
+        return this.game.playerIds.map((id) => this.getPlayer(id));
+    };
+
+    private getPlayer = (id: string) => {
+        const storedPlayer = this.players.get(id);
+        if (typeof storedPlayer === "undefined") {
+            throw Error("Internal Error: Player not found. Id: " + id);
+        }
+        const dwarfs = storedPlayer.dwarfIds.map((id) => this.getDwarf(id));
+        return new Player(
+            storedPlayer.id as PlayerId,
+            storedPlayer.resources,
+            dwarfs,
+            storedPlayer.tilesToPlace
+        );
     };
 }

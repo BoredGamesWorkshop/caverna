@@ -1,4 +1,4 @@
-import { Dwarf, DwarfId, Player } from "../entity/Player";
+import { Dwarf, DwarfId, Player } from "../entity";
 
 export const EntityFactory = {
     createPlayer: createPlayer,

@@ -1,6 +1,7 @@
 import { Player, PlayerId } from "./Player";
 import type { ActionSpace, ActionSpaceId } from "./ActionSpace";
 import { Furnishing, FurnishingId } from "./Furnishing";
+import { toIdMap } from "../util";
 
 export class Game {
     constructor(actionBoard: ActionBoard, furnishingBoard: FurnishingBoard, players: Player[]) {
@@ -24,9 +25,7 @@ export class Game {
 
 export class ActionBoard {
     constructor(actionSpaces: ActionSpace[]) {
-        this.actionSpaces = new Map(
-            actionSpaces.map((actionSpace: ActionSpace) => [actionSpace.id, actionSpace])
-        );
+        this.actionSpaces = toIdMap(actionSpaces, (actionSpace) => actionSpace.id);
     }
 
     actionSpaces: Map<ActionSpaceId, ActionSpace> = new Map();
