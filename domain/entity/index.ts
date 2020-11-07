@@ -1,5 +1,5 @@
 export { ActionSpace, ActionSpaceId } from "./ActionSpace";
-export type { Action } from "./ActionSpace";
+export type { Action, Replenishment } from "./ActionSpace";
 
 export { Tile, Furnishing, FurnishingId } from "./Furnishing";
 

@@ -5,10 +5,10 @@ import {
     Furnishing,
     Game,
     Player,
+    Replenishment,
     Resources,
     Tile,
 } from "../../../domain/entity";
-import { Replenishment } from "../../../domain/entity/ActionSpace";
 
 export class StoredGame {
     actionSpaceIds: string[] = [];
