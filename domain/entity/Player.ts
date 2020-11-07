@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { Resources } from "./Resources";
 import { Tile } from "./Furnishing";
-import { toIdMap } from "../util";
+import { toIdMap } from "../../util";
 
 export class Player {
     constructor(

@@ -1,7 +1,7 @@
 import { Player, PlayerId } from "./Player";
 import type { ActionSpace, ActionSpaceId } from "./ActionSpace";
 import { Furnishing, FurnishingId } from "./Furnishing";
-import { toIdMap } from "../util";
+import { toIdMap } from "../../util";
 
 export class Game {
     constructor(actionBoard: ActionBoard, furnishingBoard: FurnishingBoard, players: Player[]) {
