@@ -1,13 +1,15 @@
 import {
     ActionSpace,
     ActionSpaceId,
+    Choice,
     EntityMutation,
     Game,
     PlayerId,
     Resources,
     ResourceType,
 } from "../entity";
-import { bookActionSpace, takeResources } from "./utils";
+import { bookActionSpace, placeTile, takeResources } from "./utils";
+import { assertIsTile } from "../entity/Tile";
 
 export const Excavation = {
     execute,
@@ -19,10 +21,15 @@ const REPLENISH_RESOURCES = {
     ifNotEmpty: new Resources([[ResourceType.STONE, 1]]),
 };
 
-export function execute(game: Game, playerId: PlayerId): EntityMutation[] {
+function execute(game: Game, playerId: PlayerId, [chosenTile]: Choice[]): EntityMutation[] {
+    assertIsTile(chosenTile);
     const player = game.getPlayer(playerId);
     const actionSpace = game.actionBoard.getActionSpace(ActionSpaceId.EXCAVATION);
-    return [...bookActionSpace(actionSpace, player), ...takeResources(actionSpace, player)];
+    return [
+        ...bookActionSpace(actionSpace, player),
+        ...takeResources(actionSpace, player),
+        ...placeTile(chosenTile, player),
+    ];
 }
 
 function createActionSpace(): ActionSpace {

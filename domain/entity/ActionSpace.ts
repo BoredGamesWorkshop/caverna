@@ -2,6 +2,7 @@ import { Dwarf, PlayerId } from "./Player";
 import { EntityMutation, Mutation } from "./Mutation";
 import { Game } from "./Game";
 import { Resources } from "./Resources";
+import { Tile } from "./Tile";
 
 export class ActionSpace {
     constructor(
@@ -33,7 +34,9 @@ export enum ActionSpaceId {
     EXCAVATION = "excavation",
 }
 
-export type Action = (game: Game, playerId: PlayerId) => EntityMutation[];
+export type Action =
+    | ((game: Game, playerId: PlayerId, choices: Choice[]) => EntityMutation[])
+    | ((game: Game, playerId: PlayerId) => EntityMutation[]);
 
 export type Replenishment = {
     ifEmpty: Resources;
@@ -56,3 +59,5 @@ export function replenish(actionSpace: ActionSpace): Mutation<ActionSpace>[] {
         ];
     }
 }
+
+export type Choice = Tile | Action;
