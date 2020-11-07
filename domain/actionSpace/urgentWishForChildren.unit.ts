@@ -114,8 +114,6 @@ describe("Urgent Wish for Children", () => {
         it("should pay for dwelling", function () {
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
-            mutations.filter(isMutationOfType(Player));
-
             expectMutationsOfType(mutations, Player).toVerifyOnce((mutation) =>
                 _.isEqual(mutation.diff.resources, playerInitialResources)
             );
