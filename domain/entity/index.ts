@@ -1,9 +1,9 @@
 export { ActionSpace, ActionSpaceId } from "./ActionSpace";
 export type { Action } from "./ActionSpace";
 
-export { Furnishing, FurnishingId } from "./Furnishing";
+export { Tile, Furnishing, FurnishingId } from "./Furnishing";
 
-export { ActionBoard, Game } from "./Game";
+export { ActionBoard, FurnishingBoard, Game } from "./Game";
 
 export { isMutationOfType } from "./Mutation";
 export type { EntityMutation, EntityType, Mutation } from "./Mutation";

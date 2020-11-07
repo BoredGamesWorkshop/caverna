@@ -1,14 +1,34 @@
-import { buildBaseObjects, expectMutationsOfType, shouldPlaceDwarf } from "../util";
-import { UrgentWishForChildren } from "./urgentWishForChildren";
-import { ActionSpace, Dwarf, EntityMutation, isMutationOfType, Mutation, Player } from "../entity";
 import { expect } from "chai";
+import { buildBaseObjects, EntityFactory, expectMutationsOfType, expectPlaceDwarf } from "../util";
+import { UrgentWishForChildren } from "./urgentWishForChildren";
+import {
+    ActionSpace,
+    Dwarf,
+    EntityMutation,
+    FurnishingId,
+    Game,
+    isMutationOfType,
+    Mutation,
+    Player,
+    Resources,
+    ResourceType,
+} from "../entity";
+import _ from "lodash";
 
 describe("Urgent Wish for Children", () => {
-    shouldPlaceDwarf(UrgentWishForChildren.execute);
+    let game: Game;
+    let player: Player;
+
+    beforeEach(() => ({ game, player } = buildUrgentWishBaseObjects()));
+
+    it("should place dwarf", function () {
+        const mutations = UrgentWishForChildren.execute(game, player.id);
+
+        expectPlaceDwarf(mutations);
+    });
 
     describe("should create and place a new dwarf", () => {
         it("should add new dwarf to player", function () {
-            const { game, player } = buildBaseObjects();
             const playerInitialDwarfsNb = player.dwarfs.size;
 
             const mutations = UrgentWishForChildren.execute(game, player.id);
@@ -19,8 +39,6 @@ describe("Urgent Wish for Children", () => {
         });
 
         it("should add new dwarf to action space", function () {
-            const { game, player } = buildBaseObjects();
-
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
             expectMutationsOfType(mutations, ActionSpace).toVerifyOnce(
@@ -29,8 +47,6 @@ describe("Urgent Wish for Children", () => {
         });
 
         it("new dwarf should be the same for player and action space", function () {
-            const { game, player } = buildBaseObjects();
-
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
             const actionSpaceDwarf = getActionSpaceNewDwarf(mutations);
@@ -54,10 +70,14 @@ describe("Urgent Wish for Children", () => {
             return findNewDwarf(playerMutation, player);
         }
 
+        it("should throw if player reached max dwarfs number", function () {
+            player.dwarfs = EntityFactory.createDwarfs(Player.MAX_DWARFS_NUMBER);
+
+            expect(() => UrgentWishForChildren.execute(game, player.id)).to.throw();
+        });
+
         describe("new dwarf should be busy", function () {
             it("new player's dwarf should be busy", function () {
-                const { game, player } = buildBaseObjects();
-
                 const mutations = UrgentWishForChildren.execute(game, player.id);
 
                 expectMutationsOfType(mutations, Player).toVerifyOnce(
@@ -66,8 +86,6 @@ describe("Urgent Wish for Children", () => {
             });
 
             it("new action space dwarf should be busy", function () {
-                const { game, player } = buildBaseObjects();
-
                 const mutations = UrgentWishForChildren.execute(game, player.id);
 
                 expectMutationsOfType(mutations, ActionSpace).toVerifyOnce(
@@ -88,7 +106,39 @@ describe("Urgent Wish for Children", () => {
         }
     });
 
-    it("should pay for dwelling", function () {});
+    describe("should buy dwelling", function () {
+        it("should pay for dwelling", function () {
+            const mutations = UrgentWishForChildren.execute(game, player.id);
 
-    it("should add dwelling to player's store", function () {});
+            const dwellingPrice = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
+            expectMutationsOfType(mutations, Player).toVerifyOnce((mutation) =>
+                _.isEqual(mutation.diff.resources, player.resources.remove(dwellingPrice))
+            );
+        });
+
+        it("should throw if player doesn't have enough resources", function () {
+            player.resources = new Resources([
+                [ResourceType.WOOD, 2],
+                [ResourceType.STONE, 1],
+            ]);
+
+            expect(() => UrgentWishForChildren.execute(game, player.id)).to.throw();
+        });
+
+        it("should add dwelling to player's store", function () {
+            const dwelling = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING);
+
+            const mutations = UrgentWishForChildren.execute(game, player.id);
+
+            expectMutationsOfType(mutations, Player).toVerifyOnce(
+                (mutation) => mutation.diff.tilesToPlace?.includes(dwelling) === true
+            );
+        });
+    });
+
+    function buildUrgentWishBaseObjects() {
+        const { game, player } = buildBaseObjects();
+        player.resources = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
+        return { game, player };
+    }
 });
