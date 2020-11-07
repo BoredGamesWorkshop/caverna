@@ -18,10 +18,6 @@ import _ from "lodash";
 describe("Urgent Wish for Children", () => {
     let game: Game;
     let player: Player;
-    const playerInitialResources = new Resources([
-        [ResourceType.WOOD, 3],
-        [ResourceType.STONE, 1],
-    ]);
 
     beforeEach(() => ({ game, player } = buildUrgentWishBaseObjects()));
 
@@ -114,13 +110,17 @@ describe("Urgent Wish for Children", () => {
         it("should pay for dwelling", function () {
             const mutations = UrgentWishForChildren.execute(game, player.id);
 
+            const dwellingPrice = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
             expectMutationsOfType(mutations, Player).toVerifyOnce((mutation) =>
-                _.isEqual(mutation.diff.resources, playerInitialResources)
+                _.isEqual(mutation.diff.resources, player.resources.remove(dwellingPrice))
             );
         });
 
         it("should throw if player doesn't have enough resources", function () {
-            player.resources = playerInitialResources;
+            player.resources = new Resources([
+                [ResourceType.WOOD, 2],
+                [ResourceType.STONE, 1],
+            ]);
 
             expect(() => UrgentWishForChildren.execute(game, player.id)).to.throw();
         });
@@ -138,12 +138,7 @@ describe("Urgent Wish for Children", () => {
 
     function buildUrgentWishBaseObjects() {
         const { game, player } = buildBaseObjects();
-        initPlayerResources(game, player);
+        player.resources = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
         return { game, player };
-    }
-
-    function initPlayerResources(game: Game, player: Player) {
-        const price = game.furnishingBoard.getFurnishing(FurnishingId.DWELLING).price;
-        player.resources = playerInitialResources.add(price);
     }
 });
