@@ -11,7 +11,7 @@ import {
 } from "../entity";
 import { buildInitialGame } from "../initializeGame";
 
-import { Constructor } from "./Constructor";
+import { Constructor } from "../../util";
 
 export function expectPlaceDwarf(mutations: EntityMutation[]): void {
     expectMutationsOfType(mutations, Dwarf).toVerifyOnce(
