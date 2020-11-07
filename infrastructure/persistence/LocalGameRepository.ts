@@ -1,14 +1,17 @@
 import { GameRepository } from "../../domain/repository";
 import {
     ActionSpace,
+    ActionSpaceId,
     Dwarf,
     DwarfId,
     EntityMutation,
     Furnishing,
+    FurnishingId,
     Game,
     isMutationOfType,
     Mutation,
     Player,
+    PlayerId,
 } from "../../domain/entity";
 import {
     StoredActionSpace,
@@ -46,10 +49,22 @@ export class LocalGameRepository implements GameRepository {
         this.actionSpaces.set(actionSpace.id, actionSpace);
     };
 
+    private saveActionSpaces = (actionSpaces: Map<ActionSpaceId, ActionSpace>) => {
+        [...actionSpaces.values()].forEach((actionSpace) =>
+            this.updateActionSpace({ original: actionSpace, diff: actionSpace })
+        );
+    };
+
     private updateFurnishing = (mutation: Mutation<Furnishing>) => {
         const furnishing = this.furnishings.get(mutation.original.id) || new StoredFurnishing();
         furnishing.update(mutation.diff);
         this.furnishings.set(furnishing.id, furnishing);
+    };
+
+    private saveFurnishings = (furnishings: Map<FurnishingId, Furnishing>) => {
+        [...furnishings.values()].forEach((furnishing) =>
+            this.updateFurnishing({ original: furnishing, diff: furnishing })
+        );
     };
 
     private updatePlayer = (mutation: Mutation<Player>) => {
@@ -57,6 +72,12 @@ export class LocalGameRepository implements GameRepository {
         player.update(mutation.diff);
         if (mutation.diff.dwarfs) this.saveDwarfs(mutation.diff.dwarfs);
         this.players.set(player.id, player);
+    };
+
+    private savePlayers = (players: Map<PlayerId, Player>) => {
+        [...players.values()].forEach((player) =>
+            this.updatePlayer({ original: player, diff: player })
+        );
     };
 
     private updateDwarf = (mutation: Mutation<Dwarf>) => {
@@ -73,5 +94,10 @@ export class LocalGameRepository implements GameRepository {
         this.updateDwarf({ original: dwarf, diff: dwarf });
     };
 
-    createGame = (game: Game): void => {};
+    createGame = (game: Game): void => {
+        this.game.update(game);
+        this.saveActionSpaces(game.actionBoard.actionSpaces);
+        this.saveFurnishings(game.furnishingBoard.furnishings);
+        this.savePlayers(game.players);
+    };
 }
