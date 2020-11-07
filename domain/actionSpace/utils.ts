@@ -33,16 +33,23 @@ function assertPlayerCanHaveMoreDwarf(player: Player) {
     }
 }
 
+export function placeTile(tile: Tile, player: Player): EntityMutation[] {
+    return [
+        {
+            original: player,
+            diff: { tilesToPlace: [...player.tilesToPlace, tile] },
+        },
+    ];
+}
+
 export function buyFurnishing(furnishing: Furnishing, player: Player): EntityMutation[] {
     assertPlayerHasEnoughResources(player, furnishing.price);
     return [
         {
             original: player,
-            diff: {
-                resources: player.resources.remove(furnishing.price),
-                tilesToPlace: [furnishing as Tile].concat(player.tilesToPlace.concat()),
-            },
+            diff: { resources: player.resources.remove(furnishing.price) },
         },
+        ...placeTile(furnishing as Tile, player),
     ];
 
     function assertPlayerHasEnoughResources(player: Player, price: Resources) {
