@@ -1,6 +1,7 @@
 import {
     ActionSpace,
     ActionSpaceId,
+    assertIsTile,
     Choice,
     EntityMutation,
     Game,
@@ -9,7 +10,6 @@ import {
     ResourceType,
 } from "../entity";
 import { bookActionSpace, placeTile, takeResources } from "./utils";
-import { assertIsTile } from "../entity/Tile";
 
 export const Excavation = {
     execute,

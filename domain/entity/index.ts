@@ -1,7 +1,7 @@
 export { ActionSpace, ActionSpaceId } from "./ActionSpace";
 export type { Action, Choice } from "./ActionSpace";
 
-export { Tile, Furnishing, FurnishingId } from "./Tile";
+export { assertIsTile, CavernId, Tile, Furnishing, FurnishingId } from "./Tile";
 
 export { ActionBoard, FurnishingBoard, Game } from "./Game";
 

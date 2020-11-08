@@ -1,7 +1,15 @@
 import { Excavation } from "./excavation";
-import { ActionSpace, ActionSpaceId, Game, Player, Resources, ResourceType, Tile } from "../entity";
+import {
+    ActionSpace,
+    ActionSpaceId,
+    CavernId,
+    Game,
+    Player,
+    Resources,
+    ResourceType,
+    Tile,
+} from "../entity";
 import { buildBaseObjects, expectMutationsOfType, expectPlaceDwarf } from "../util";
-import { CavernId } from "../entity/Tile";
 import { GatherWood } from "./gatherWood";
 
 describe("Excavation", () => {
