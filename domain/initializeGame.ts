@@ -1,5 +1,5 @@
 import { ActionBoard, FurnishingBoard, Game, Player } from "./entity";
-import { GatherWood, UrgentWishForChildren } from "./actionSpace";
+import { Excavation, GatherWood, UrgentWishForChildren } from "./actionSpace";
 import { Dwelling } from "./furnishing";
 import { EntityFactory } from "./util";
 
@@ -13,6 +13,7 @@ export function buildInitialActionBoard(): ActionBoard {
     return new ActionBoard([
         GatherWood.createActionSpace(),
         UrgentWishForChildren.createActionSpace(),
+        Excavation.createActionSpace(),
     ]);
 }
 
